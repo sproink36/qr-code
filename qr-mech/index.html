@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>QR Code Styling</title>
+        <script type="text/javascript" src="qr.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div name="settings" onchange="updateQr()" oninput="updateQr()">
+            Width: <input type="number" value=300 id="width"/><br>
+            Height: <input type="number" value=300 id="height"/><br>
+            Data: <input type="text" placeholder="Data" id="data" value="example data"/><br>
+            Image(URL or Select file): <input type="text" id="image" value="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"/> <input type="file" id="picture"/><br>
+            Margin: <input type="number" id="margin" value="0"/><br>
+            <h3>QR OPTIONS</h3>
+            <div name="qr-options">
+                <label for="qr-correction">Correction level</label>
+                <select id="qr-correction">
+                    <option value="L" selected>L</option>
+                    <option value="M">M</option>
+                    <option value="Q">Q</option>
+                    <option value="H" selected>H</option>
+                </select>
+            </div>
+            <h3>IMAGE OPTIONS</h3>
+            <div name="image-options">
+                Hide background dots: <input id="image-hide" type="checkbox" checked/><br>
+                Image Size: <input id="image-size" type="number" step=0.1 value=0.4 min="0.1" max="1"/><br>
+                Margin: <input id="image-margin" type="number" value="0"/><br>
+            </div>
+            <h3>DOTS OPTIONS</h3>
+            <div name="dots-options">
+                Color: <input id="dots-color" type="text" value="#000"/><br>
+                <label for="dots-type">Dots style</label>
+                <select id="dots-type">
+                    <option value="square" selected>Square</option>
+                    <option value="dots">Dots</option>
+                    <option value="rounded">Rounded</option>
+                    <option value="extra-rounded">Extra rounded</option>
+                    <option value="classy">Classy</option>
+                    <option value="classy-rounded">Classy rounded</option>
+                </select>
+            </div>
+            <h3>BACKGROUND OPTIONS</h3>
+            <div name="background-options">
+                Color: <input id="background-color" type="text" value="#fff"/><br>
+            </div>
+            <h3>CORNERS OPTIONS</h3>
+            <div name="corners-options">
+                Color: <input id="corners-color" type="text" value="#000"/><br>
+                <label for="corners-type">Corners style</label>
+                <select id="corners-type">
+                    <option value="square" selected>Square</option>
+                    <option value="dots">Dot</option>
+                    <option value="extra-rounded">Extra rounded</option>
+                </select>
+            </div>
+            <h3>CORNERS DOTS OPTIONS</h3>
+            <div name="corners-dots-options">
+                Color: <input id="corners-dots-color" type="text" value="#000"/><br>
+                <label for="corners-dots-type">Corners Dots style</label>
+                <select id="corners-dots-type">
+                    <option value="square" selected>Square</option>
+                    <option value="dots">Dot</option>
+                </select>
+            </div>
+        </div>
+        <div id="canvas"></div>
+
+        <div>
+            <label for="download-extension">Download extension</label>
+            <select id="download-extension">
+                <option value="svg" selected>SVG</option>
+                <option value="png">PNG</option>
+                <option value="webp">WebP</option>
+                <option value="jpeg">JPEG</option>
+            </select>
+            <button onclick="downloadQr()">DOWNLOAD</button>
+        </div>
+        <script type="text/javascript">
+
+            var qrCode;
+
+            function updateQr() {
+                
+                let width = $('#width').val();
+                let height = $('#height').val();
+                let data = $('#data').val();
+                let image = $('#image').val();
+                let margin = $('#margin').val();
+                let qr_correction = $('#qr-correction').val();
+                let image_hide = document.getElementById('image-hide').checked;
+                let image_size = $('#image-size').val();
+                let image_margin = $('#image-margin').val();
+                let dots_color = $('#dots-color').val();
+                let dots_type = $('#dots-type').val();
+                let background_color = $('#background-color').val();
+                let corners_color = $('#corners-color').val();
+                let corners_type = $('#corners-type').val();
+                let corners_dots_color = $('#corners-dots-color').val();
+                let corners_dots_type = $('#corners-dots-type').val();
+
+                let options = {
+                    width: 300,
+                    height: 300,
+                    data: data,
+                    image: image,
+                    margin: margin,
+                    qrOptions: {
+                        errorCorrectionLevel: qr_correction
+                    },
+                    imageOptions: {
+                        hideBackgroundDots: image_hide,
+                        imageSize: image_size,
+                        margin: image_margin
+                    },
+                    dotsOptions: {
+                        color: dots_color,
+                        type: dots_type
+                    },
+                    cornersSquareOptions: {
+                        color: corners_color,
+                        type: corners_type
+                    },
+                    cornersDotsOptions: {
+                        color: corners_dots_color,
+                        type: corners_dots_type
+                    },
+                    backgroundOptions: {
+                        color: background_color
+                    }
+                }
+
+                qrCode.update(options)
+            }
+
+            function downloadQr() {
+                qrCode.download({ name: "QRCODE", extension: $('#download-extension').val() });
+            }
+
+            $(document).ready(() => {
+                let width = $('#width').val();
+                let height = $('#height').val();
+                let data = $('#data').val();
+                let image = $('#image').val();
+                let margin = $('#margin').val();
+                let qr_correction = $('#qr-correction').val();
+                let image_hide = document.getElementById('image-hide').checked;
+                let image_size = $('#image-size').val();
+                let image_margin = $('#image-margin').val();
+                let dots_color = $('#dots-color').val();
+                let dots_type = $('#dots-type').val();
+                let background_color = $('#background-color').val();
+                let corners_color = $('#corners-color').val();
+                let corners_type = $('#corners-type').val();
+                let corners_dots_color = $('#corners-dots-color').val();
+                let corners_dots_type = $('#corners-dots-type').val();
+
+                let options = {
+                    width: 300,
+                    height: 300,
+                    data: data,
+                    image: image,
+                    qrOptions: {
+                        errorCorrectionLevel: qr_correction
+                    },
+                    imageOptions: {
+                        hideBackgroundDots: image_hide,
+                        imageSize: image_size,
+                        margin: image_margin
+                    },
+                    dotsOptions: {
+                        color: dots_color,
+                        type: dots_type
+                    },
+                    cornersSquareOptions: {
+                        color: corners_color,
+                        type: corners_type
+                    },
+                    cornersDotsOptions: {
+                        color: corners_dots_color,
+                        type: corners_dots_type
+                    },
+                    backgroundOptions: {
+                        color: background_color
+                    }
+                }
+                qrCode = new QRCodeStyling(options);
+
+                qrCode.append(document.getElementById("canvas"));
+
+                document.getElementById('picture').onchange = function (evt) {
+                    var tgt = evt.target || window.event.srcElement,
+                        files = tgt.files;
+                    
+                    // FileReader support
+                    if (FileReader && files && files.length) {
+                        var fr = new FileReader();
+                        fr.onload = function () {
+                            $('#image').val(fr.result);
+                            updateQr();
+                        }
+                        fr.readAsDataURL(files[0]);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
