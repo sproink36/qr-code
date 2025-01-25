@@ -19,6 +19,7 @@ import { useMedia } from "../hooks/useMedia";
 import Lenis from "@studio-freight/lenis"; // govno
 import Scrollbar from "smooth-scrollbar";
 import { ScrollTrigger } from "gsap/all";
+import Logo from "../assets/icons/Logo.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 let mm = gsap.matchMedia();
@@ -205,14 +206,21 @@ onMounted(() => {
   <div class="main main_anim">
     <Header class="main__header" />
     <div class="main__block_anim">
-      <div class="container title_container">
-        <H1Title class="title title_anim">
-          Сервис генерации куаркодов
-        </H1Title>
+      <div class="container title_container" v-if="mediaMedium || mediaSmall">
+        <H1Title class="title title_anim"> Сервис генерации куаркодов </H1Title>
+      </div>
+      <div
+        class="container title_container title_container_flex"
+        v-if="mediaLarge || mediaXLarge"
+      >
+        <H1Title class="title">Генерируй</H1Title>
+        <Logo class="main__logo" />
+        <H1Title class="title">куаркоды</H1Title>
       </div>
       <div class="container sub-title_container">
         <p class="sub-title sub-title_anim">
-          Бесплатный сервис для создания QR-кодов с&nbsp;расширенными возможностями аналитики
+          Бесплатный сервис для создания QR-кодов с&nbsp;расширенными
+          возможностями аналитики
         </p>
       </div>
     </div>
@@ -280,6 +288,54 @@ onMounted(() => {
   }
 }
 
+.title_container_flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  & .title {
+    padding: 0;
+    flex-shrink: 1;
+    margin-right: -10px;
+    margin-bottom: 0;
+  }
+
+  & .main__logo {
+    align-self: flex-end;
+    flex-shrink: 0;
+    // margin-left: -10px;
+  }
+
+  @include media-queries.media-Xlarge {
+    margin-bottom: 60px;
+    padding-top: 30vh;
+
+    & .title {
+      font-size: 150px;
+    }
+
+    & .main__logo {
+      width: 314px;
+      height: 314px;
+    }
+  }
+
+  @include media-queries.media-large {
+    margin-bottom: 40px;
+    padding-top: 27vh;
+
+    & .main__logo {
+      width: 200px;
+      height: 200px;
+    }
+
+    & .title {
+      font-size: 102px;
+    }
+  }
+}
+
 .sub-title_container {
   display: flex;
   align-items: center;
@@ -318,11 +374,11 @@ onMounted(() => {
 
   @include media-queries.media-Xlarge {
     z-index: 500;
-    top: 806px;
+    top: 890px;
   }
   @include media-queries.media-large {
     z-index: 500;
-    top: 652px;
+    top: 623px;
   }
 
   & .browser-btn {

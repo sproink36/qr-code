@@ -8,6 +8,7 @@
 @use "/src/assets/scss/includes/media-queries";
 
 h4 {
+  font-size: inherit;
   font-family: "PIXY";
   font-weight: 400;
 

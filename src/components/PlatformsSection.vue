@@ -12,9 +12,10 @@
         <div class="website">
           <div class="header">
             <H4Title class="title"
-              >Всё в&nbsp;одном месте<br />&mdash; наш сайт</H4Title
+              >Всё в&nbsp;одном<br />
+              месте<br />&mdash; наш сайт</H4Title
             >
-            <ButtonBadge class="badge_btn">
+            <ButtonBadge class="badge_btn website__badge_btn">
               <template v-slot:icon>
                 <BrowserColor />
               </template>
@@ -31,7 +32,7 @@
         </div>
         <div class="extension">
           <div class="header">
-            <ButtonBadge class="badge_btn">
+            <ButtonBadge class="badge_btn extension__badge_btn">
               <template v-slot:icon>
                 <Puzzle />
               </template>
@@ -73,7 +74,7 @@
           </div>
         </div>
         <div class="figma_plugin">
-          <ButtonBadge class="badge_btn">
+          <ButtonBadge class="badge_btn figma_plugin__badge_btn">
             <template v-slot:icon>
               <Lightning />
             </template>
@@ -139,7 +140,36 @@ onMounted(() => {
   observer.observe(document.body, { childList: true, subtree: true });
 });
 </script>
+<style lang="css">
+@media (min-width: 2160px) {
+  .figma_plugin__badge_btn > h4 {
+    font-size: 44px;
+  }
+}
 
+@media (min-width: 1520px) and (max-width: 2160px) {
+  .figma_plugin__badge_btn > h4 {
+    font-size: 32px;
+    line-height: 48px;
+  }
+
+  .figma_plugin__badge_btn .icon_block {
+    width: 44px;
+    height: 44px;
+  }
+
+  .website__badge_btn > h4,
+  .extension__badge_btn > h4 {
+    font-size: 32px;
+  }
+
+  .website__badge_btn .icon_block,
+  .extension__badge_btn .icon_block {
+    width: 44px;
+    height: 44px;
+  }
+}
+</style>
 <style lang="scss" scoped>
 @use "/src/assets/scss/includes/media-queries";
 
@@ -194,15 +224,15 @@ onMounted(() => {
   }
 
   @include media-queries.media-Xlarge {
-    top: 360px;
-    left: 900px;
+    top: 459px;
+    left: 690px;
     width: 690px;
     height: 690px;
   }
 
   @include media-queries.media-large {
-    top: 260px;
-    left: 600px;
+    top: 346px;
+    left: 410px;
     width: 600px;
     height: 600px;
   }
@@ -296,23 +326,33 @@ spline-viewer a {
   //   }
 
   @include media-queries.media-Xlarge {
-    grid-template-columns: 1fr auto 0.51fr;
-    grid-template-rows: auto auto auto;
-    gap: 60px 60px;
-    grid-template-areas:
-      "website website extension"
-      "figma_plugin . extension"
-      ". . extension";
+    // grid-template-columns: 1fr auto 0.51fr;
+    // grid-template-rows: auto auto auto;
+    // gap: 60px 60px;
+    // grid-template-areas:
+    //   "website website extension"
+    //   "figma_plugin . extension"
+    //   ". . extension";
+    grid-auto-columns: minmax(600px, 666px) minmax(600px, 666px)
+      minmax(600px, 666px);
+
+    grid-auto-rows: max-content;
+    gap: 40px;
+    grid-template-areas: "website figma_plugin extension";
   }
 
   @include media-queries.media-large {
-    grid-template-columns: 1fr auto 0.31fr;
-    grid-template-rows: auto auto auto;
-    gap: 40px 40px;
-    grid-template-areas:
-      "website website extension"
-      "figma_plugin . extension"
-      ". . extension";
+    // grid-template-columns: 1fr auto 0.31fr;
+    // grid-template-rows: auto auto auto;
+    // gap: 40px 40px;
+    // grid-template-areas:
+    //   "website website extension"
+    //   "figma_plugin . extension"
+    //   ". . extension";
+    grid-auto-columns: 450px auto minmax(420px, 450px);
+    grid-auto-rows: max-content;
+    gap: 40px;
+    grid-template-areas: "website figma_plugin extension";
   }
 
   @include media-queries.media-medium {
@@ -348,6 +388,21 @@ spline-viewer a {
 
     & .badge_btn {
       background-color: #e9cbfa;
+
+      @include media-queries.media-large {
+        gap: 10px;
+      }
+    }
+    @include media-queries.media-Xlarge {
+      & .title br:last-child {
+        display: none;
+      }
+    }
+
+    @include media-queries.media-large {
+      & .title br:last-child {
+        display: none;
+      }
     }
 
     @include media-queries.media-small {
@@ -360,16 +415,28 @@ spline-viewer a {
 
   & .btn {
     @include media-queries.media-Xlarge {
-      width: 393px;
+      // width: 393px;
     }
 
     @include media-queries.media-large {
-      width: 393px;
+      // width: 393px;
     }
   }
 
   & .text {
     margin-bottom: 20px;
+    color: #18213c99;
+    @include media-queries.media-Xlarge {
+      & br:last-child {
+        display: none;
+      }
+      margin-bottom: 40px;
+    }
+
+    @include media-queries.media-large {
+      font-size: 20px;
+      line-height: 28px;
+    }
 
     @include media-queries.media-small {
       & br {
@@ -378,10 +445,31 @@ spline-viewer a {
     }
   }
   @include media-queries.media-Xlarge {
-    padding: 80px;
+    padding: 60px;
+    & .header {
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 40px;
+    }
+    height: max-content;
   }
 
   @include media-queries.media-large {
+    padding: 40px;
+    width: 450px;
+
+    & .header {
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 20px;
+      & .badge_btn {
+        padding: 10px;
+        padding-right: 20px;
+      }
+    }
+    height: max-content;
   }
 
   @include media-queries.media-medium {
@@ -396,13 +484,25 @@ spline-viewer a {
   grid-area: extension;
   display: flex;
   flex-direction: column;
-  padding: 30px;
+
   background-color: #fbffe3;
   z-index: 9;
 
   @include media-queries.media-Xlarge {
-    padding: 40px 80px 80px 80px;
+    // padding: 40px 80px 80px 80px;
+    padding-bottom: 80px;
   }
+
+  @include media-queries.media-large {
+    // padding: 40px 80px 80px 80px;
+    padding: 40px;
+    padding-bottom: 40px;
+  }
+
+  @include media-queries.media-medium {
+    padding: 30px;
+  }
+
   @include media-queries.media-small {
     padding: 20px;
   }
@@ -418,6 +518,13 @@ spline-viewer a {
         width: 473px;
         justify-content: flex-start;
       }
+
+      @include media-queries.media-large {
+        padding: 10px;
+        width: max-content;
+        padding-right: 20px;
+        gap: 10px;
+      }
     }
 
     & .title {
@@ -429,11 +536,14 @@ spline-viewer a {
     @include media-queries.media-Xlarge {
       flex-direction: column;
       gap: 80px;
+      padding: 40px;
     }
 
     @include media-queries.media-large {
       flex-direction: column;
-      gap: 40px;
+      gap: 20px;
+      // padding: 40px;
+      padding-bottom: 0px;
     }
 
     @include media-queries.media-medium {
@@ -452,7 +562,7 @@ spline-viewer a {
 
   & .text {
     margin-bottom: 20px;
-
+    color: #18213c99;
     & > br {
       display: none;
     }
@@ -462,7 +572,18 @@ spline-viewer a {
       font-size: 32px;
       line-height: 40px;
       text-align: left;
-
+      padding: 0 40px;
+      color: #18213cb2;
+      & > br {
+        display: block;
+      }
+    }
+    @include media-queries.media-large {
+      margin-bottom: 20px;
+      font-size: 20px;
+      line-height: 28px;
+      text-align: left;
+      color: #18213cb2;
       & > br {
         display: block;
       }
@@ -588,7 +709,7 @@ spline-viewer a {
         }
 
         @include media-queries.media-large {
-          margin-bottom: 33px;
+          margin-bottom: 23px;
         }
 
         @include media-queries.media-medium {
@@ -752,16 +873,25 @@ spline-viewer a {
   max-width: 750px;
 
   @include media-queries.media-Xlarge {
-    max-width: 1197px;
-    min-width: 1197px;
-    padding: 80px;
+    // max-width: 1197px;
+    // min-width: 1197px;
+    padding: 60px;
+    gap: 40px;
     border-radius: 40px;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: max-content;
   }
 
   @include media-queries.media-large {
-    min-width: 750px;
-    padding: 35px;
+    // min-width: 750px;
+    padding: 40px;
     border-radius: 40px;
+    gap: 40px;
+    border-radius: 40px;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: max-content;
   }
 
   @include media-queries.media-medium {
@@ -779,7 +909,11 @@ spline-viewer a {
 
     @include media-queries.media-Xlarge {
       width: auto;
-      padding-right: 40px;
+      // padding-right: 40px;
+    }
+    @include media-queries.media-large {
+      padding: 10px;
+      gap: 10px;
     }
 
     @include media-queries.media-medium {
@@ -816,6 +950,20 @@ spline-viewer a {
     background-color: #f3f5f7;
     padding: 0 50px;
     border-radius: 50px;
+
+    @include media-queries.media-Xlarge {
+      font-size: 56px;
+      line-height: 56px;
+      font-family: "PIXY";
+      background: none;
+    }
+
+    @include media-queries.media-large {
+      font-family: PIXY;
+      font-size: 40px;
+      line-height: 48px;
+      background: none;
+    }
 
     @include media-queries.media-medium {
       padding: 0 30px;

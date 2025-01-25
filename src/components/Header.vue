@@ -16,16 +16,16 @@
         </li>
         <li class="item">
           <a class="link" ef="#">
-            <span class="link_text link_defualt">Расширение/плагин</span>
-            <span class="link_text link_copy">Расширение/плагин</span>
-            <span class="link_hidden">Расширение/плагин</span>
+            <span class="link_text link_defualt">FAQ</span>
+            <span class="link_text link_copy">FAQ</span>
+            <span class="link_hidden">FAQ</span>
           </a>
         </li>
         <li class="item">
           <a class="link" ef="#">
-            <span class="link_text link_defualt">FAQ</span>
-            <span class="link_text link_copy">FAQ</span>
-            <span class="link_hidden">FAQ</span>
+            <span class="link_text link_defualt">Расширение/плагин</span>
+            <span class="link_text link_copy">Расширение/плагин</span>
+            <span class="link_hidden">Расширение/плагин</span>
           </a>
         </li>
       </ul>
@@ -158,16 +158,8 @@ onMounted(() => {
 
       headerAnimation
         .to(".header__list_anim", { y: "-200", duration: 0.6 }, "<")
-        .to(
-          ".header__button",
-          { width: width(), duration: 0.4 },
-          "<"
-        )
-        .to(
-          ".header__button-block",
-          { width: width(), duration: 0.4 },
-          "<"
-        )
+        .to(".header__button", { width: width(), duration: 0.4 }, "<")
+        .to(".header__button-block", { width: width(), duration: 0.4 }, "<")
         .to(".header__button-text", { width: 0, duration: 0.4 }, "<")
         .to(".header__button-icon", { left: 0, duration: 0.4 }, "<");
 
@@ -208,7 +200,6 @@ onMounted(() => {
     }
   );
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -287,18 +278,36 @@ onMounted(() => {
 
   @include media-queries.media-large {
     margin-left: auto;
-    height: 64px;
+    height: 74px;
   }
 }
 
 .item {
   overflow: hidden;
+  @include media-queries.media-Xlarge {
+    padding: 10px 30px;
+  }
+
+  @include media-queries.media-large {
+    padding: 10px 20px;
+  }
+}
+.item:hover {
+  border-radius: 50px;
+  background-color: #0000000d;
+
+  & .link .link_defualt {
+    top: -140%;
+  }
+
+  & .link .link_copy {
+    top: 0;
+  }
 }
 
 .link {
   position: relative;
   cursor: pointer;
-
   & .link_hidden {
     visibility: hidden;
     font-weight: 500;
@@ -343,16 +352,8 @@ onMounted(() => {
   }
 
   & .link_copy {
-    top: 100%;
-    color: #18213c99;
-  }
-
-  &:hover .link_defualt {
-    top: -100%;
-  }
-
-  &:hover .link_copy {
-    top: 0;
+    top: 140%;
+    // color: #18213c99;
   }
 }
 
