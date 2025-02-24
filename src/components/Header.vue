@@ -270,14 +270,15 @@ onMounted(() => {
   padding: 0 30px;
   background-color: #f3f5f7;
   border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 
   @include media-queries.media-Xlarge {
     padding: 0 40px;
-    margin-left: auto;
   }
 
   @include media-queries.media-large {
-    margin-left: auto;
     height: 74px;
   }
 }
@@ -484,7 +485,7 @@ onMounted(() => {
   }
 
   @include media-queries.media-large {
-    width: 379px;
+    width: 313px;
     height: 64px;
   }
 

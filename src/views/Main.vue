@@ -293,6 +293,8 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   gap: 30px;
+  left: -35px;
+  position: relative;
 
   & .title {
     padding: 0;
@@ -337,7 +339,7 @@ onMounted(() => {
 }
 
 .sub-title_container {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
 }
@@ -346,6 +348,7 @@ onMounted(() => {
   text-align: center;
   line-height: 40px;
   font-size: 28px;
+  margin: 0 auto;
 
   @include media-queries.media-Xlarge {
     line-height: 48px;
