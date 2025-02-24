@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import Angle1 from "../assets/icons/Angle1.vue";
+import { Angle1 } from "@/components/icons/index";
 
 defineProps({
   currentSetting: String,

@@ -56,7 +56,7 @@
             @select-settings="selectSettings"
           >
             <template v-slot:icon>
-              <Pallet />
+              <Pallete />
             </template>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta
             dolore nemo maxime doloremque nihil deleniti distinctio cupiditate
@@ -111,11 +111,18 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import ButtonTag from "./ButtonTag.vue";
-import { Link, Mail, Pero, Square, Text, Spin } from "../assets/icons";
-import Message from "../assets/icons/Message.vue";
+import {
+  Link,
+  Mail,
+  Pero,
+  Square,
+  Text,
+  Spin,
+  Message,
+  Pallete,
+} from "@/components/icons/index";
 import Button from "./Button.vue";
 import SettingsMenu from "./SettingsMenu.vue";
-import Pallet from "../assets/icons/Pallete.vue";
 import gsap from "gsap";
 import { useMedia } from "../hooks/useMedia";
 

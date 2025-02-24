@@ -1,15 +1,39 @@
-import * as VueRouter from 'vue-router'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
-import Main from '../views/Main.vue'
+import Main from "@/views/Main.vue";
+
+const Dashboard = () => import("@/views/Dashboard.vue");
+const DashboardMain = () => import("@/components/dashboard/main/Main.vue");
+const DashboardStorage = () =>
+  import("@/components/dashboard/storage/Storage.vue");
+
+const DashboardStatistic = () =>
+  import("@/components/dashboard/statistic/Statistic.vue");
+
+const InnerQr = () => import("@/components/dashboard/inner_qr/InnerQr.vue");
+const InnerFolder = () =>
+  import("@/components/dashboard/inner_folder/InnerFolder.vue");
 
 const routes = [
-  { path: '/', name: 'main', component: Main }
-]
+  { path: "/", name: "main", component: Main },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    redirect: "dashboard/main",
+    component: Dashboard,
+    children: [
+      { path: "main", component: DashboardMain },
+      { path: "storage", component: DashboardStorage },
+      { path: "statistic", component: DashboardStatistic },
+      { path: "inner_qr/:id", component: InnerQr },
+      { path: "InnerFolder/:id", component: InnerFolder },
+    ],
+  },
+];
 
-const router = VueRouter.createRouter({
-  history: createWebHashHistory(),
-  routes
-})
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
 
-export default router
+export default router;

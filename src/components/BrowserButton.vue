@@ -7,7 +7,7 @@
 
 <script setup>
 import Button from "./Button.vue";
-import { Browser } from "../assets/icons";
+import { Browser } from "@/components/icons/index";
 import { onMounted } from "vue";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";

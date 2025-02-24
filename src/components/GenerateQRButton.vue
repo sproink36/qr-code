@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { LogoSmall } from "../assets/icons";
+import { LogoSmall } from "@/components/icons/index";
 </script>
 
 <style lang="scss" scoped>

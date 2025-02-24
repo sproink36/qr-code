@@ -13,7 +13,7 @@
 
 <script setup lang="js">
 import H4Title from "./H4Title.vue";
-import { Angle } from "../assets/icons/index";
+import { Angle } from "@/components/icons/index";
 import { ref } from "vue";
 defineProps({
   title: String,

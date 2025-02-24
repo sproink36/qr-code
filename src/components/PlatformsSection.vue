@@ -94,7 +94,7 @@ import {
   MoreVert,
   Pin,
   Puzzle,
-} from "../assets/icons";
+} from "@/components/icons/index";
 import ButtonBadge from "./ButtonBadge.vue";
 import Button from "./Button.vue";
 import H2Title from "./H2Title.vue";

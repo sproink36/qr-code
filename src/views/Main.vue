@@ -19,7 +19,7 @@ import { useMedia } from "../hooks/useMedia";
 import Lenis from "@studio-freight/lenis"; // govno
 import Scrollbar from "smooth-scrollbar";
 import { ScrollTrigger } from "gsap/all";
-import Logo from "../assets/icons/Logo.vue";
+import {Logo} from "@/components/icons/index";
 
 gsap.registerPlugin(ScrollTrigger);
 let mm = gsap.matchMedia();

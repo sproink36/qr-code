@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-import { Logo, User } from "../assets/icons";
+import { Logo, User } from "@/components/icons/index";
 import GenerateQRButton from "./GenerateQRButton.vue";
 import Button from "./Button.vue";
 import { useMedia } from "../hooks/useMedia";

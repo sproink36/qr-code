@@ -1,0 +1,12 @@
+@use "../variables" as *;
+
+@mixin blockStyle($bg-color: #f3f5f7, $br-radius: 20px, $padding: 40px) {
+  background-color: $bg-color;
+  border-radius: $br-radius;
+  padding: $padding;
+}
+
+@mixin dashboard-border($border: 1px solid $stroke, $br-radius: 10px) {
+  border: $border;
+  border-radius: $br-radius;
+}
