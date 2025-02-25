@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "@studio-freight/lenis": "^1.0.42",
     "@vueuse/core": "^12.0.0",
     "aos": "^2.3.4",
@@ -22,6 +23,7 @@
     "smooth-scrollbar": "^8.8.4",
     "swiper": "^11.1.1",
     "toolcool-range-slider": "^4.0.28",
+    "v-calendar": "^3.1.2",
     "vue": "^3.4.21",
     "vue-gallery": "^2.0.5",
     "vue-katex-auto-render": "^0.2.0",

@@ -6,12 +6,15 @@ import router from "./router";
 import VueScrollTo from "vue-scrollto";
 import Katex from "vue-katex-auto-render";
 import clickOutside from "./module/clickOutside";
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
 const app = createApp(App);
 
 app.directive("katex", Katex);
 app.directive("click-outside", clickOutside); //!
 app.use(store);
 app.use(router);
+app.use(VCalendar, {})
 
 app.use(VueScrollTo, {
   container: "body",

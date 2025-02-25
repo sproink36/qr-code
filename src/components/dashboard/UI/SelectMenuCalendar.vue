@@ -7,7 +7,6 @@ import Angle from "@/components/icons/Angle.vue";
 
 const items = ["За все время", "Сегодня", "Прошлая неделя", "Прошлый месяц"];
 const currentItem = ref("За все время");
-
 const months = [
   "Январь",
   "Февраль",
@@ -23,14 +22,41 @@ const months = [
   "Декабрь",
 ];
 const weekDays = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
+
+const selectedStartDate = ref(null); // Начальная дата
+const selectedEndDate = ref(null); // Конечная дата
 const year = ref(new Date().getFullYear());
 const currentMounth = ref(new Date().getMonth());
 const monthList = computed(() => {
   return listDaysCalendar(currentMounth.value, year.value);
 });
 
-const selectedStartDate = ref(null); // Начальная дата
-const selectedEndDate = ref(null); // Конечная дата
+const daysWithClasses = computed(() => {
+  return monthList.value.map((day) => {
+    const currentDate = new Date(year.value, day.month, day.number);
+    const isMarkedStart =
+      selectedStartDate.value &&
+      currentDate.getTime() === selectedStartDate.value.getTime() &&
+      selectedEndDate.value;
+    const isMarkedEnd =
+      selectedEndDate.value &&
+      currentDate.getTime() === selectedEndDate.value.getTime() &&
+      selectedStartDate.value;
+
+    return {
+      ...day,
+      classes: {
+        "inner-day": day.isNotCurrentMounth,
+        "left-day": isLeftEdge(day.index),
+        "right-day": isRightEdge(day.index),
+        "selected-day": isSelectedDate(day),
+        "start-date": isMarkedStart,
+        "end-date": isMarkedEnd,
+        "in-range": isDateInRange(day),
+      },
+    };
+  });
+});
 
 function listDaysCalendar(newMonth, year) {
   const firstDay = new Date(year, newMonth).getDay();
@@ -78,28 +104,39 @@ function listDaysCalendar(newMonth, year) {
     });
     index++;
   }
+  console.log(daysList);
 
   return daysList;
 }
 
 function selectDate(day) {
-  const selectedDate = new Date(year.value, day.month, day.number);
+  // Определяем правильный год
+  let selectedYear = year.value;
 
-  // Если обе даты уже выбраны, сбросить выбор
+  // Если месяц — декабрь, а день относится к январю следующего года
+  if (currentMounth.value === 11 && day.month === 0) {
+    selectedYear += 1;
+  }
+  // Если месяц — январь, а день относится к декабрю прошлого года
+  else if (currentMounth.value === 0 && day.month === 11) {
+    selectedYear -= 1;
+  }
+
+  const selectedDate = new Date(selectedYear, day.month, day.number);
+
   if (selectedStartDate.value && selectedEndDate.value) {
     selectedStartDate.value = selectedDate;
     selectedEndDate.value = null;
     return;
   }
 
-  // Если начальная дата не выбрана, установить её
   if (!selectedStartDate.value) {
     selectedStartDate.value = selectedDate;
-  }
-  // Если начальная дата выбрана, но конечная ещё нет
-  else if (!selectedEndDate.value) {
-    // Если выбранная дата раньше начальной, поменять их местами
-    if (selectedDate < selectedStartDate.value) {
+  } else if (!selectedEndDate.value) {
+    if (
+      selectedDate.getTime() < selectedStartDate.value.getTime() &&
+      selectedDate.getFullYear() === selectedStartDate.value.getFullYear()
+    ) {
       selectedEndDate.value = selectedStartDate.value;
       selectedStartDate.value = selectedDate;
     } else {
@@ -112,6 +149,8 @@ function isDateInRange(day) {
   if (!selectedStartDate.value || !selectedEndDate.value) return false;
 
   const currentDate = new Date(year.value, day.month, day.number);
+
+  // Проверяем, что текущая дата строго между начальной и конечной, независимо от года
   return (
     currentDate > selectedStartDate.value && currentDate < selectedEndDate.value
   );
@@ -135,11 +174,10 @@ function isRightEdge(index) {
   return index === 6; // Последняя колонка (воскресенье)
 }
 
-function isRightAfterOrBeforeSelected(day) {
-  if (!selectedStartDate.value || !selectedEndDate.value) return false;
+// function isAfterOrBeforeSelected(day) {
+//   if (!selectedStartDate.value || !selectedEndDate.value) return false;
 
-  
-}
+// }
 
 function nextMonth() {
   if (currentMounth.value === 11) {
@@ -148,7 +186,6 @@ function nextMonth() {
   } else {
     currentMounth.value++;
   }
-  // console.log(monthList.value);
 }
 
 function prevMonth() {
@@ -158,7 +195,6 @@ function prevMonth() {
   } else {
     currentMounth.value--;
   }
-  // console.log(monthList.value);
 }
 </script>
 <template>
@@ -190,14 +226,8 @@ function prevMonth() {
           <ul class="full-days">
             <li
               class="day"
-              v-for="day in monthList"
-              :class="{
-                'inner-day': day.isNotCurrentMounth,
-                'left-day': isLeftEdge(day.index),
-                'right-day': isRightEdge(day.index),
-                'selected-day': isSelectedDate(day),
-                'in-range': isDateInRange(day),
-              }"
+              v-for="day in daysWithClasses"
+              :class="day.classes"
               @click="selectDate(day)"
             >
               {{ day.number }}
@@ -321,8 +351,21 @@ function prevMonth() {
     transform: translate(-50%);
     z-index: -1;
   }
-  & .in-range {
-    color: green;
+  & .selected-day::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: #20d6471a;
+    z-index: -1;
+  }
+  & .start-date:not(.right-day)::before {
+    left: 50%;
+    right: 0;
+  }
+  & .end-date:not(.left-day)::before {
+    left: 0;
+    right: 50%;
   }
   & .in-range::after {
     content: "";
@@ -334,14 +377,16 @@ function prevMonth() {
     background-color: #20d6471a;
     z-index: -1;
   }
-  & .in-range + .right-day {
-    color: red;
+  & .in-range.right-day:not(.selected-day)::after {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
   }
-  //   & .right-day {
-  //     color: red;
-  //   }
-  //   & .left-day {
-  //     color: green;
-  //   }
+  & .in-range.left-day:not(.selected-day)::after {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+  & .start-date.end-date::before {
+    display: none;
+  }
 }
 </style>
