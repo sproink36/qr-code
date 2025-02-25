@@ -1,14 +1,12 @@
 <script setup>
-import ComponentName from '../../UI/ComponentName.vue';
-import SelectMenuCalendar from '../../UI/SelectMenuCalendar.vue';
-import SelectMenuCalendar1 from '../../UI/SelectMenuCalendar1.vue';
-
+import ComponentName from "../../UI/ComponentName.vue";
+import SelectMenuCalendar from "../../UI/SelectMenuCalendar.vue";
 </script>
 <template>
   <div class="statistic-inner-qr">
     <div class="header">
       <ComponentName>Статистика</ComponentName>
-      <SelectMenuCalendar1 />
+      <SelectMenuCalendar />
     </div>
   </div>
 </template>
@@ -22,7 +20,7 @@ import SelectMenuCalendar1 from '../../UI/SelectMenuCalendar1.vue';
 
 .header {
   display: flex;
-  // justify-content: space-between;
+  justify-content: space-between;
   align-items: center;
 }
 </style>

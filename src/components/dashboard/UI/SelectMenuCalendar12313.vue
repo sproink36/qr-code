@@ -33,13 +33,14 @@ const monthList = computed(() => {
 
 const daysWithClasses = computed(() => {
   return monthList.value.map((day) => {
+    const currentDate = new Date(year.value, day.month, day.number);
     const isMarkedStart =
       selectedStartDate.value &&
-      day.day.getTime() === selectedStartDate.value.getTime() &&
+      currentDate.getTime() === selectedStartDate.value.getTime() &&
       selectedEndDate.value;
     const isMarkedEnd =
       selectedEndDate.value &&
-      day.day.getTime() === selectedEndDate.value.getTime() &&
+      currentDate.getTime() === selectedEndDate.value.getTime() &&
       selectedStartDate.value;
 
     return {
@@ -48,23 +49,19 @@ const daysWithClasses = computed(() => {
         "inner-day": day.isNotCurrentMounth,
         "left-day": isLeftEdge(day.index),
         "right-day": isRightEdge(day.index),
-        "selected-day": isSelectedDate(day.day),
+        "selected-day": isSelectedDate(day),
         "start-date": isMarkedStart,
         "end-date": isMarkedEnd,
-        "in-range": isDateInRange(day.day),
+        "in-range": isDateInRange(day),
       },
     };
   });
 });
 
-function listDaysCalendar(currentMounth, currentYear) {
-  const firstDay = new Date(currentYear, currentMounth).getDay();
-  const daysInCurrentMonth = new Date(
-    currentYear,
-    currentMounth + 1,
-    0
-  ).getDate();
-  const daysInPrevMonth = new Date(currentYear, currentMounth, 0).getDate();
+function listDaysCalendar(newMonth, year) {
+  const firstDay = new Date(year, newMonth).getDay();
+  const daysInMonth = new Date(year, newMonth + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, newMonth, 0).getDate();
   const slicePreviousMonth = firstDay === 0 ? 6 : firstDay - 1;
 
   const daysList = [];
@@ -74,87 +71,104 @@ function listDaysCalendar(currentMounth, currentYear) {
     i <= daysInPrevMonth;
     i++
   ) {
-    let newMonth = currentMounth;
-    let newYear = currentYear;
-    if (currentMounth === 0) {
-      newMonth = 11;
-      newYear = currentYear - 1;
-    } else {
-      newMonth = currentMounth - 1;
-    }
-
     daysList.push({
-      day: new Date(newYear, newMonth, i),
+      number: i,
+      month: newMonth === 0 ? 11 : newMonth - 1,
+      year: new Date().getFullYear(),
       isNotCurrentMounth: true,
       index: index % 7,
     });
-
     index++;
   }
 
-  for (let i = 1; i <= daysInCurrentMonth; i++) {
+  for (let i = 1; i <= daysInMonth; i++) {
     daysList.push({
-      day: new Date(currentYear, currentMounth, i),
+      number: i,
+      month: newMonth,
+      year: new Date().getFullYear(),
       isNotCurrentMounth: false,
       index: index % 7,
     });
     index++;
   }
 
-  // // Рассчитываем, сколько дней из следующего месяца нужно добавить
+  // Рассчитываем, сколько дней из следующего месяца нужно добавить
   const totalDays = daysList.length; // Общее количество дней в daysList
   const remainingDays = 7 - (totalDays % 7); // Сколько дней нужно добавить, чтобы общее количество было кратно 7
 
   // Добавляем дни из следующего месяца
   for (let i = 1; i <= remainingDays; i++) {
-    let newMonth = currentMounth;
-    let newYear = currentYear;
-    if (currentMounth === 11) {
-      newMonth = 0;
-      newYear = currentYear + 1;
-    } else {
-      newMonth = currentMounth + 1;
-    }
     daysList.push({
-      day: new Date(newYear, newMonth, i),
+      number: i,
+      month: newMonth === 11 ? 0 : newMonth + 1,
+      year: new Date().getFullYear(),
       isNotCurrentMounth: true,
       index: index % 7,
     });
     index++;
   }
+  console.log(daysList);
 
   return daysList;
 }
 
 function selectDate(day) {
+  // Определяем правильный год
+  let selectedYear = year.value;
+
+  // Если месяц — декабрь, а день относится к январю следующего года
+  if (currentMounth.value === 11 && day.month === 0) {
+    selectedYear += 1;
+  }
+  // Если месяц — январь, а день относится к декабрю прошлого года
+  else if (currentMounth.value === 0 && day.month === 11) {
+    selectedYear -= 1;
+  }
+
+  const selectedDate = new Date(selectedYear, day.month, day.number);
+
   if (selectedStartDate.value && selectedEndDate.value) {
-    selectedStartDate.value = day;
+    selectedStartDate.value = selectedDate;
     selectedEndDate.value = null;
     return;
   }
 
   if (!selectedStartDate.value) {
-    selectedStartDate.value = day;
+    selectedStartDate.value = selectedDate;
   } else if (!selectedEndDate.value) {
-    if (selectedStartDate.value.getTime() > day.getTime()) {
+    if (
+      selectedDate.getTime() < selectedStartDate.value.getTime() &&
+      selectedDate.getFullYear() === selectedStartDate.value.getFullYear()
+    ) {
       selectedEndDate.value = selectedStartDate.value;
-      selectedStartDate.value = day;
+      selectedStartDate.value = selectedDate;
     } else {
-      selectedEndDate.value = day;
+      selectedEndDate.value = selectedDate;
     }
   }
 }
 
 function isDateInRange(day) {
   if (!selectedStartDate.value || !selectedEndDate.value) return false;
-  return day > selectedStartDate.value && day < selectedEndDate.value;
+
+  const currentDate = new Date(day.year, day.month, day.number);
+  console.log("currentDate - " + currentDate);
+  console.log("day - " + day.year);
+  
+
+  // Проверяем, что текущая дата строго между начальной и конечной, независимо от года
+  return (
+    currentDate > selectedStartDate.value && currentDate < selectedEndDate.value
+  );
 }
 
 function isSelectedDate(day) {
+  const currentDate = new Date(year.value, day.month, day.number);
   return (
     (selectedStartDate.value &&
-      day.getTime() === selectedStartDate.value.getTime()) ||
-    (selectedEndDate.value && day.getTime() === selectedEndDate.value.getTime())
+      currentDate.getTime() === selectedStartDate.value.getTime()) ||
+    (selectedEndDate.value &&
+      currentDate.getTime() === selectedEndDate.value.getTime())
   );
 }
 
@@ -165,6 +179,11 @@ function isLeftEdge(index) {
 function isRightEdge(index) {
   return index === 6; // Последняя колонка (воскресенье)
 }
+
+// function isAfterOrBeforeSelected(day) {
+//   if (!selectedStartDate.value || !selectedEndDate.value) return false;
+
+// }
 
 function nextMonth() {
   if (currentMounth.value === 11) {
@@ -215,9 +234,9 @@ function prevMonth() {
               class="day"
               v-for="day in daysWithClasses"
               :class="day.classes"
-              @click="selectDate(day.day)"
+              @click="selectDate(day)"
             >
-              {{ day.day.getDate() }}
+              {{ day.number }}
             </li>
           </ul>
         </div>
@@ -305,6 +324,7 @@ function prevMonth() {
 .full-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  // grid-template-rows: ;
   row-gap: 10px;
   & .day {
     position: relative;
