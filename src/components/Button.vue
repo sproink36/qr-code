@@ -1,3 +1,10 @@
+<script setup lang="js">
+
+const props = defineProps({
+  btnType: String,
+  disabled: Boolean,
+});
+</script>
 <template>
   <div
     class="animated-button"
@@ -11,16 +18,6 @@
     <span class="text text_copy"><slot></slot></span>
   </div>
 </template>
-
-<script setup lang="js">
-
-const props = defineProps({
-  btnType: String,
-  disabled: Boolean,
-});
-
-</script>
-
 <style lang="scss" scoped>
 @use "/src/assets/scss/includes/common" as *;
 @use "/src/assets/scss/includes/variables" as *;
@@ -35,6 +32,7 @@ const props = defineProps({
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
+  transition: border-width 0.5s ease;
 
   &.green {
     border-color: $black;
@@ -61,7 +59,7 @@ const props = defineProps({
   }
 
   &.black:active {
-    background-color: #0A0F1D;
+    background-color: #0a0f1d;
   }
 
   &.disabled {
@@ -104,7 +102,7 @@ const props = defineProps({
     font-size: 24px;
     line-height: 32px;
   }
-  
+
   @include media-queries.media-small {
     height: 64px;
     font-size: 15px;

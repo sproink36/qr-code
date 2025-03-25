@@ -7,14 +7,14 @@ defineProps({
 });
 </script>
 <template>
-  <div class="my-profile-button">
+  <RouterLink to="/dashboard/settings" class="my-profile-button">
     <img :src="img" class="img" />
     <div class="data-block">
       <div class="name">{{ name }}</div>
       <div class="mail">{{ mail }}</div>
     </div>
     <Angle class="icon" />
-  </div>
+  </RouterLink>
 </template>
 <style lang="scss" scoped>
 .my-profile-button {

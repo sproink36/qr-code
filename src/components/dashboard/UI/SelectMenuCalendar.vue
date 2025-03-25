@@ -2,7 +2,7 @@
 import { Calendar, CheckMark } from "@/components/icons";
 import SelectMenu from "./SelectMenu.vue";
 import MoreActions from "./MoreActions.vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import Angle from "@/components/icons/Angle.vue";
 
 const items = ["За все время", "Сегодня", "Прошлая неделя", "Прошлый месяц"];
@@ -21,6 +21,22 @@ const months = [
   "Ноябрь",
   "Декабрь",
 ];
+
+const abbreviatedMonthsNames = [
+  "янв",
+  "февр",
+  "март",
+  "апр",
+  "май",
+  "июнь",
+  "июль",
+  "авг",
+  "сент",
+  "окт",
+  "нояб",
+  "дек",
+];
+
 const weekDays = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
 const selectedStartDate = ref(null); // Начальная дата
@@ -29,6 +45,15 @@ const year = ref(new Date().getFullYear());
 const currentMounth = ref(new Date().getMonth());
 const monthList = computed(() => {
   return listDaysCalendar(currentMounth.value, year.value);
+});
+
+// Emit событие для отправки данных родителю
+const emit = defineEmits(["update-dates"]);
+
+// Следим за изменениями selectedStartDate и selectedEndDate
+watch([selectedStartDate, selectedEndDate], () => {
+  const datesArray = getDatesArray();
+  emit("update-dates", datesArray); // Отправляем массив дат родителю
 });
 
 const daysWithClasses = computed(() => {
@@ -182,6 +207,50 @@ function prevMonth() {
   } else {
     currentMounth.value--;
   }
+}
+
+// Функция для получения массива дат
+function getDatesArray() {
+  if (!selectedStartDate.value || !selectedEndDate.value) return [];
+
+  // Если начальная и конечная даты одинаковы, возвращаем массив с одним объектом
+  if (selectedStartDate.value.getTime() === selectedEndDate.value.getTime()) {
+    const date = selectedStartDate.value;
+    return [
+      {
+        month: abbreviatedMonthsNames[date.getMonth()],
+        day: date.getDate(),
+        data: Math.floor(Math.random() * 999) + 1,
+      },
+    ];
+  }
+
+  const dates = [];
+  let currentDate = new Date(selectedStartDate.value);
+
+  // Добавляем начальную дату
+  dates.push({
+    month: abbreviatedMonthsNames[currentDate.getMonth()],
+    day: currentDate.getDate(),
+    data: Math.floor(Math.random() * 999) + 1,
+  });
+
+  // Добавляем все дни в диапазоне
+  if (selectedStartDate.value) {
+    while (currentDate < selectedEndDate.value) {
+      currentDate.setDate(currentDate.getDate() + 1);
+      dates.push({
+        month: abbreviatedMonthsNames[currentDate.getMonth()],
+        day: currentDate.getDate(),
+        data: Math.floor(Math.random() * 999) + 1,
+      });
+    }
+  }
+
+  // Добавляем конечную дату
+ 
+
+  return dates;
 }
 </script>
 <template>

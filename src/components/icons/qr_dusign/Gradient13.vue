@@ -1,0 +1,8 @@
+<template>
+    <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#paint0_angular_1655_5014_clip_path)" data-figma-skip-parse="true"><g transform="matrix(0.02 -0.0198994 0.0198994 0.02 21.0215 20)"><foreignObject x="-1305.77" y="-1305.77" width="2611.54" height="2611.54"><div xmlns="http://www.w3.org/1999/xhtml" style="background:conic-gradient(from 90deg,rgba(24, 33, 60, 1) 0deg,rgba(32, 213, 70, 1) 360deg);height:100%;width:100%;opacity:1"></div></foreignObject></g></g><rect x="0.921875" width="40" height="40" rx="10" data-figma-gradient-fill="{&#34;type&#34;:&#34;GRADIENT_ANGULAR&#34;,&#34;stops&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.094117648899555206,&#34;g&#34;:0.12941177189350128,&#34;b&#34;:0.23529411852359772,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:0.12562499940395355,&#34;g&#34;:0.83749997615814209,&#34;b&#34;:0.27816963195800781,&#34;a&#34;:1.0},&#34;position&#34;:1.0}],&#34;stopsVar&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.094117648899555206,&#34;g&#34;:0.12941177189350128,&#34;b&#34;:0.23529411852359772,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:0.12562499940395355,&#34;g&#34;:0.83749997615814209,&#34;b&#34;:0.27816963195800781,&#34;a&#34;:1.0},&#34;position&#34;:1.0}],&#34;transform&#34;:{&#34;m00&#34;:39.999996185302734,&#34;m01&#34;:39.798824310302734,&#34;m02&#34;:-18.877956390380859,&#34;m10&#34;:-39.798824310302734,&#34;m11&#34;:39.999996185302734,&#34;m12&#34;:19.89941406250},&#34;opacity&#34;:1.0,&#34;blendMode&#34;:&#34;NORMAL&#34;,&#34;visible&#34;:true}"/>
+<defs>
+<clipPath id="paint0_angular_1655_5014_clip_path"><rect x="0.921875" width="40" height="40" rx="10"/></clipPath></defs>
+</svg>
+
+</template>

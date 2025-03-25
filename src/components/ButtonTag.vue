@@ -97,7 +97,7 @@ defineProps({
   & > * {
     width: 100%;
     height: 100%;
-    fill: #18213c;
+    // fill: #18213c;
   }
 }
 
@@ -110,7 +110,7 @@ defineProps({
 
   .icon {
     & > * {
-      fill: white;
+      // fill: white;
     }
   }
 }
@@ -123,5 +123,27 @@ defineProps({
   .contain_copy {
     top: 0;
   }
+}
+</style>
+<style lang="css">
+.block.active.defualt .icon svg {
+  fill: white;
+}
+.block.active.last-stroke .icon svg > path:last-child {
+  stroke: white; /* Измените stroke на нужный цвет */
+}
+.block.active.last-path .icon svg > path:last-child {
+  fill: white; /* Измените stroke на нужный цвет */
+}
+.block.active.you-tube .icon svg > path:first-child {
+  fill: white; /* Измените stroke на нужный цвет */
+  stroke: white;
+}
+.block.active.you-tube .icon svg > path:last-child {
+  stroke: white;
+}
+.block.active.zoom .icon svg > path {
+  stroke: white;
+  fill: #18213c;
 }
 </style>

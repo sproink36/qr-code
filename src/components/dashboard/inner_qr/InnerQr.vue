@@ -1,5 +1,5 @@
 <script setup>
-import MainInnerQr from "./components/mainInnerQr.vue";
+import MainInnerQr from "./components/MainInnerQr.vue";
 import StatisticInnerQr from "./components/StatisticInnerQr.vue";
 </script>
 <template>

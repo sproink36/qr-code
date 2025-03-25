@@ -6,12 +6,16 @@ defineProps({
   select: Boolean,
   colorSelect: String,
   number: Number,
+  isGlobalScan: {
+    type: Boolean,
+    default: true,
+  },
 });
 </script>
 <template>
   <StatsCard class="stats-card-scans" :title-style="{ 'margin-bottom': '5px' }">
     <template v-slot:title><slot /></template>
-    <div class="select">
+    <div class="select" v-if="isGlobalScan">
       <div class="defualt-select" v-if="!select">
         <div class="text">По всем проектам</div>
       </div>
@@ -21,7 +25,7 @@ defineProps({
       </div>
       <Angle class="icon" />
     </div>
-    <div class="nums">
+    <div class="nums" :class="{ 'margin-auto': isGlobalScan === false }">
       <div class="number number_big">{{ number > 999 ? "999+" : number }}</div>
       <div class="number">
         {{ number > 999 ? "999+" : number
@@ -37,6 +41,11 @@ defineProps({
 <style lang="scss" scoped>
 @use "/src/assets/scss/includes/dashboard/mixins" as *;
 @use "/src/assets/scss/includes/variables" as *;
+.stats-card-scans {
+  display: flex;
+  flex-direction: column;
+}
+
 .select {
   @include blockStyle($bg-color: #f3f5f7, $br-radius: 7px, $padding: 10px);
   display: flex;
@@ -108,6 +117,10 @@ defineProps({
     font-size: 48px;
     line-height: 56px;
   }
+}
+
+.nums.margin-auto {
+  margin-bottom: auto;
 }
 
 .indicator {

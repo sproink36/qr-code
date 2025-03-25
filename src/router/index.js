@@ -13,7 +13,8 @@ const DashboardStatistic = () =>
 const InnerQr = () => import("@/components/dashboard/inner_qr/InnerQr.vue");
 const InnerFolder = () =>
   import("@/components/dashboard/inner_folder/InnerFolder.vue");
-
+const Settings = () => import("@/components/dashboard/settings/Settings.vue");
+const NewQr = () => import("@/components/dashboard/new_qr/NewQr.vue");
 const routes = [
   { path: "/", name: "main", component: Main },
   {
@@ -27,6 +28,8 @@ const routes = [
       { path: "statistic", component: DashboardStatistic },
       { path: "inner_qr/:id", component: InnerQr },
       { path: "InnerFolder/:id", component: InnerFolder },
+      { path: "settings", component: Settings },
+      { path: "new_qr", component: NewQr },
     ],
   },
 ];

@@ -5,7 +5,7 @@ defineProps({ color: String, items: Array });
 </script>
 <template>
   <StatsCard class="stats-card-qr">
-    <template v-slot:title>Всего куаров</template>
+    <template v-slot:title><slot name="title" /></template>
     <div class="number"><slot /></div>
     <div class="list">
       <div class="item" v-for="item in items">
@@ -21,7 +21,7 @@ defineProps({ color: String, items: Array });
 @use "/src/assets/scss/includes/dashboard/mixins" as *;
 
 .number {
-    margin-bottom: 21px;
+  margin-bottom: 21px;
   font-weight: 500;
   font-size: 48px;
   line-height: 56px;

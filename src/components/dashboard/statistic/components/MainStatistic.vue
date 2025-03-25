@@ -45,18 +45,24 @@ const fakeTopCities = [
   "Самара",
 ];
 const fakeTopPeak = [
-  {num: 23, firstTime: "00:00", lastTime: "06:00"},
-  {num: 27, firstTime: "06:00", lastTime: "12:00"},
-  {num: 35, firstTime: "12:00", lastTime: "18:00"},
-  {num: 15, firstTime: "18:00", lastTime: "06:00"},
-]
+  { num: 23, firstTime: "00:00", lastTime: "06:00" },
+  { num: 27, firstTime: "06:00", lastTime: "12:00" },
+  { num: 35, firstTime: "12:00", lastTime: "18:00" },
+  { num: 15, firstTime: "18:00", lastTime: "06:00" },
+];
 </script>
 <template>
   <div class="main-statistic">
     <ComponentName class="main-statistic__title">Статистика</ComponentName>
     <div class="list">
-      <StatsCardQr :items="fakeStatsAllQr">256</StatsCardQr>
-      <StatsCardQr :items="fakeActiveQr">124</StatsCardQr>
+      <StatsCardQr :items="fakeStatsAllQr">
+        <template v-slot:title>Всего куаров</template>
+        256
+      </StatsCardQr>
+      <StatsCardQr :items="fakeActiveQr">
+        <template v-slot:title>Активных куаров</template>
+        124
+      </StatsCardQr>
       <StatsCardScans :select="false" :number="9999">
         Сканирований за последний месяц
       </StatsCardScans>
@@ -70,7 +76,7 @@ const fakeTopPeak = [
         Топ 10 по городам
       </StatsCardTopCities>
       <StatsCardMonth> Статистика по месяцам </StatsCardMonth>
-      <StatsCardPeakActivity :items="fakeTopPeak"/>
+      <StatsCardPeakActivity :items="fakeTopPeak" />
     </div>
   </div>
 </template>

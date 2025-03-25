@@ -1,9 +1,12 @@
 <script setup>
 import Button from "@/components/Button.vue";
 import { PlusCircle } from "@/components/icons";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 </script>
 <template>
-  <Button class="btn-create-qr" btnType="green">
+  <Button class="btn-create-qr" btnType="green" @click="router.push('/dashboard/new_qr')">
     <div>
       <PlusCircle />
       <p>Создать куаркод</p>

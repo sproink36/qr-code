@@ -2,12 +2,16 @@
 import Button from "@/components/Button.vue";
 import NavigationCard from "./components/NavigationCard.vue";
 import TariffAndInfo from "./components/TariffAndInfo.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 </script>
 <template>
   <div class="side-bar">
     <NavigationCard class="navigation-card" />
     <TariffAndInfo class="tariff-adn-info" />
-    <Button btnType="green" class="btn">Создать куаркод</Button>
+    <Button btnType="green" class="btn" @click="router.push('/dashboard/new_qr')">Создать куаркод</Button>
   </div>
 </template>
 <style lang="scss" scoped>
