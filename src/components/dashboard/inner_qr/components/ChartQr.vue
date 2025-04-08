@@ -36,7 +36,7 @@ const verticalLinesPlugin = {
       x.ticks.forEach((_, index) => {
         const xPos = x.getPixelForTick(index);
         ctx.beginPath();
-        ctx.moveTo(xPos, bottom); // Начинаем линию на уровне метки
+        ctx.moveTo(xPos, bottom); // Начинаем линию на уровне метки 1
         ctx.lineTo(xPos, bottom + options.lineHeight); // Заканчиваем линию ниже метки
         ctx.stroke();
       });
